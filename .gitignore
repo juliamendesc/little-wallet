@@ -4,6 +4,8 @@
 /node_modules
 /.pnp
 .pnp.js
+.DS_Store
+
 
 # testing
 /coverage
@@ -30,6 +32,11 @@ yarn-error.log*
 .env.production.local
 
 .vercel
+
+package-lock.json
+yarn.lock
+
+commit.sh
 
 # contract type generation
 /contracts/types
