@@ -40,6 +40,7 @@ import Connect from "@/layouts/connect";
 import Shop from "@/examples/Icons/Shop";
 import Document from "@/examples/Icons/Document";
 import { LoginContext } from "@/context/loginContext";
+import AuthContext, { AuthenticationContext } from "../context/context";
 
 const DAI_TOKEN_ADDRESS = "0x6b175474e89094c44da98b954eedeac495271d0f";
 
@@ -64,6 +65,15 @@ export default function App() {
     TokenBalance,
   };
 
+  const { loading, error, connected, data, setAuthState } = useContext(AuthenticationContext);
+
+
+  setAuthState({
+    loading: true,
+    error: null,
+    connected: isConnected,
+    data: null, // Replace with the actual user data
+  });
   const routes = [
     {
       type: "collapse",
@@ -128,6 +138,7 @@ export default function App() {
     });
 
   return (
+
     <ThemeProvider theme={theme}>
       <CssBaseline />
       {layout === "dashboard" && (
@@ -143,10 +154,12 @@ export default function App() {
           />
         </>
       )}
+      <AuthContext>
       <Routes>
         {getRoutes(routes)}
         <Route path="*" element={<Navigate to="/dashboard" />} />
       </Routes>
+      </AuthContext>
     </ThemeProvider>
   );
 }

@@ -14,6 +14,8 @@ import SoftTypography from "@/components/SoftTypography";
 import BasicLayout from "./components/BasicLayout";
 import Account from "components/Account";
 
+import Hello from "../../../smartContracts/hello";
+
 function Connect({ triedToEagerConnect, handleLogout }) {
   return (
     <BasicLayout title="Little Wallet" description="Connect your wallet for live demo.">
@@ -31,6 +33,7 @@ function Connect({ triedToEagerConnect, handleLogout }) {
                   textGradient
                 >
                   <Account triedToEagerConnect={triedToEagerConnect} handleLogout={handleLogout} />
+                  <Hello/>
                 </SoftTypography>
               </SoftTypography>
             </SoftBox>

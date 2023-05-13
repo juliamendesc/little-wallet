@@ -16,11 +16,18 @@ import OrderOverview from "@/layouts/dashboard/components/OrderOverview";
 // Data
 import Transactions from "./components/Transactions";
 
+import AuthContext, { AuthenticationContext } from "../../../context/context";
+import { useContext } from "react";
+
+
 const Dashboard = (dashboardProps) => {
   const { account, library, triedToEagerConnect, isConnected, ETHBalance, TokenBalance } =
     dashboardProps;
 
+    const { loading, error, connected, data, setAuthState } = useContext(AuthenticationContext);
+    
   console.log("isConnected", isConnected);
+  console.log("connected", connected);
 
   return (
     <DashboardLayout>
