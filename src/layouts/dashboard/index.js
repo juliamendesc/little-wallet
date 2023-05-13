@@ -17,6 +17,7 @@ import OrderOverview from "@/layouts/dashboard/components/OrderOverview";
 import Transactions from "./components/Transactions";
 import { useContext, useEffect } from "react";
 import { LoginContext } from "@/context/loginContext";
+import ETHBalance from "components/ETHBalance";
 
 const Dashboard = () => {
   const {
@@ -24,15 +25,15 @@ const Dashboard = () => {
     setIsLoggedIn,
     setIsConnecting,
     error,
-    activate,
-    chainId,
     account,
-    setError,
-    ENSName,
     active,
     setIsAuthenticated,
     stopOnboarding,
   } = useContext(LoginContext);
+
+  const balance = ETHBalance();
+
+  console.log("balance", balance);
 
   useEffect(() => {
     if (active || error) {
@@ -54,21 +55,11 @@ const Dashboard = () => {
       <DashboardLayout>
         <SoftBox py={3}>
           <SoftBox mb={3}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={6} xl={6}>
-                <MiniStatisticsCard
-                  title={{ text: "Today's money" }}
-                  count="$53,000"
-                  percentage={{ color: "success", text: "+55%" }}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6} xl={6}>
-                <MiniStatisticsCard
-                  title={{ text: "Blocked money" }}
-                  count="2,300"
-                  percentage={{ color: "success", text: "+3%" }}
-                />
-              </Grid>
+            <Grid item xs={12} sm={6} xl={6}>
+              <MiniStatisticsCard
+                title={{ text: "Today's money" }}
+                count={balance.props.children[1]}
+              />
             </Grid>
           </SoftBox>
           <SoftBox mb={3}>

@@ -96,15 +96,11 @@ const Account = () => {
     isLoggedIn && (
       <a
         {...{
-          href: formatEtherscanLink("Account", [chainId, account]),
-          target: "_blank",
+          href: "/dashboard",
           rel: "noopener noreferrer",
         }}
       >
         Your wallet: {ENSName || `${shortenHex(account, 4)}`}
-        {/* <a href="#" className="close">
-        X
-      </a> */}
       </a>
     )
   );

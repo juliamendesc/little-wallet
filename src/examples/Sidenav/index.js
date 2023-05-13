@@ -36,9 +36,8 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const { pathname } = location;
   const collapseName = pathname.split("/").slice(1)[0];
 
-  const { isLoggedIn, ENSName, account, chainId } = useContext(LoginContext);
+  const { account, chainId } = useContext(LoginContext);
 
-  console.log("ENSName", ENSName);
   console.log("account", account);
   console.log("chainId", chainId);
 

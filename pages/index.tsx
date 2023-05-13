@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
@@ -23,14 +23,39 @@ import Connect from "@/layouts/connect";
 import Shop from "@/examples/Icons/Shop";
 import Document from "@/examples/Icons/Document";
 import { useSoftUIController } from "@/context";
+import { LoginContext } from "@/context/loginContext";
+import { useRouter } from "next/router";
 
 const DAI_TOKEN_ADDRESS = "0x6b175474e89094c44da98b954eedeac495271d0f";
 
 export default function App() {
   const [controller, dispatch] = useSoftUIController();
-  const { miniSidenav, direction, layout, sidenavColor } = controller;
-  const [onMouseEnter, setOnMouseEnter] = useState(false);
+  const { direction, layout, sidenavColor } = controller;
   const { pathname } = useLocation();
+  const {
+    isAuthenticated,
+    isLoggedIn,
+    setIsLoggedIn,
+    isConnecting,
+    setIsConnecting,
+    setConnecting,
+    triedToEagerConnect,
+    web3,
+    error,
+    activate,
+    chainId,
+    account,
+    setError,
+    ENSName,
+    active,
+    setIsAuthenticated,
+    connecting,
+    isMetaMaskInstalled,
+    isWeb3Available,
+    startOnboarding,
+    stopOnboarding,
+  } = useContext(LoginContext);
+  const router = useRouter();
 
   const routes = [
     {
@@ -53,18 +78,11 @@ export default function App() {
     },
   ];
 
-  // Setting the dir attribute for the body element
   useEffect(() => {
-    if (document !== undefined) document.body.setAttribute("dir", direction);
-  }, [direction]);
-
-  // Setting page scroll to 0 when changing the route
-  useEffect(() => {
-    if (document !== undefined) {
-      document.documentElement.scrollTop = 0;
-      document.scrollingElement.scrollTop = 0;
+    if (!isLoggedIn) {
+      router.push("/connect");
     }
-  }, [pathname]);
+  }, [isLoggedIn]);
 
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {
@@ -89,7 +107,11 @@ export default function App() {
       )}
       <Routes>
         {getRoutes(routes)}
-        <Route path="*" element={<Navigate to="/dashboard" />} />
+        {isLoggedIn ? (
+          <Route path="*" element={<Navigate to="/dashboard" />} />
+        ) : (
+          <Route path="*" element={<Navigate to="/connect" />} />
+        )}
       </Routes>
     </ThemeProvider>
   );

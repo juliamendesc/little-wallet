@@ -13,7 +13,6 @@ import Icon from "@mui/material/Icon";
 // Soft UI Dashboard React components
 import SoftBox from "@/components/SoftBox";
 import SoftTypography from "@/components/SoftTypography";
-import SoftInput from "@/components/SoftInput";
 
 // Soft UI Dashboard React examples
 import Breadcrumbs from "@/examples/Breadcrumbs";
@@ -29,12 +28,7 @@ import {
 } from "@/examples/Navbars/DashboardNavbar/styles";
 
 // Soft UI Dashboard React context
-import {
-  useSoftUIController,
-  setTransparentNavbar,
-  setMiniSidenav,
-  setOpenConfigurator,
-} from "@/context";
+import { useSoftUIController, setTransparentNavbar, setMiniSidenav } from "@/context";
 
 // Images
 import Link from "react-router-dom";
@@ -43,7 +37,7 @@ import { useLocation } from "react-router-dom";
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useSoftUIController();
-  const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator } = controller;
+  const { miniSidenav, transparentNavbar, fixedNavbar } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
 
