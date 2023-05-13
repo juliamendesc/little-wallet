@@ -16,26 +16,6 @@ function MiniStatisticsCard({ bgColor, title, count, percentage, icon, direction
       <SoftBox bgColor={bgColor} variant="gradient">
         <SoftBox p={2}>
           <Grid container alignItems="center">
-            {direction === "left" ? (
-              <Grid item>
-                <SoftBox
-                  variant="gradient"
-                  bgColor={bgColor === "white" ? icon.color : "white"}
-                  color={bgColor === "white" ? "white" : "dark"}
-                  width="3rem"
-                  height="3rem"
-                  borderRadius="md"
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  shadow="md"
-                >
-                  <Icon fontSize="small" color="inherit">
-                    {icon.component}
-                  </Icon>
-                </SoftBox>
-              </Grid>
-            ) : null}
             <Grid item xs={8}>
               <SoftBox ml={direction === "left" ? 2 : 0} lineHeight={1}>
                 <SoftTypography
@@ -59,27 +39,6 @@ function MiniStatisticsCard({ bgColor, title, count, percentage, icon, direction
                 </SoftTypography>
               </SoftBox>
             </Grid>
-            {direction === "right" ? (
-              <Grid item xs={4}>
-                <SoftBox
-                  variant="gradient"
-                  bgColor={bgColor === "white" ? icon.color : "white"}
-                  color={bgColor === "white" ? "white" : "dark"}
-                  width="3rem"
-                  height="3rem"
-                  marginLeft="auto"
-                  borderRadius="md"
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  shadow="md"
-                >
-                  <Icon fontSize="small" color="inherit">
-                    {icon.component}
-                  </Icon>
-                </SoftBox>
-              </Grid>
-            ) : null}
           </Grid>
         </SoftBox>
       </SoftBox>

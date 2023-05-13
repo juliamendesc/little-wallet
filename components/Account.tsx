@@ -7,6 +7,7 @@ import useMetaMaskOnboarding from "../hooks/useMetaMaskOnboarding";
 import { formatEtherscanLink, shortenHex } from "../util";
 import SoftButton from "@/components/SoftButton";
 import SoftTypography from "@/components/SoftTypography";
+import { Link } from "react-router-dom";
 
 type AccountProps = {
   triedToEagerConnect: boolean;

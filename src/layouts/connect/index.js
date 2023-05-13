@@ -7,7 +7,6 @@ import Card from "@mui/material/Card";
 // Soft UI Dashboard React components
 import SoftBox from "@/components/SoftBox";
 import SoftTypography from "@/components/SoftTypography";
-import SoftButton from "@/components/SoftButton";
 
 // Authentication layout components
 

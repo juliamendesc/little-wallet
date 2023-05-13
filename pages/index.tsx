@@ -26,9 +26,8 @@ import createCache from "@emotion/cache";
 // Soft UI Dashboard React contexts
 import { useSoftUIController, setMiniSidenav, setOpenConfigurator } from "@/context";
 
-import brand from "@/assets/images/logo-ct.png";
+import brand from "public/logo.svg";
 
-import Link from "next/link";
 import ETHBalance from "../components/ETHBalance";
 import TokenBalance from "../components/TokenBalance";
 import useEagerConnect from "../hooks/useEagerConnect";
@@ -64,20 +63,20 @@ export default function App() {
   const routes = [
     {
       type: "collapse",
-      name: "Dashboard",
-      key: "dashboard",
-      route: "/dashboard",
-      icon: <Shop size="12px" />,
-      component: <Dashboard />,
-      noCollapse: true,
-    },
-    {
-      type: "collapse",
       name: "Connect",
       key: "connect",
       route: "/connect",
       icon: <Document size="12px" />,
       component: <Connect triedToEagerConnect={triedToEagerConnect} />,
+      noCollapse: true,
+    },
+    {
+      type: "collapse",
+      name: "Dashboard",
+      key: "dashboard",
+      route: "/dashboard",
+      icon: <Shop size="12px" />,
+      component: <Dashboard />,
       noCollapse: true,
     },
   ];
@@ -137,53 +136,38 @@ export default function App() {
       return null;
     });
 
-  const configsButton = (
-    <SoftBox
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      width="3.5rem"
-      height="3.5rem"
-      bgColor="white"
-      shadow="sm"
-      borderRadius="50%"
-      position="fixed"
-      right="2rem"
-      bottom="2rem"
-      zIndex={99}
-      color="dark"
-      sx={{ cursor: "pointer" }}
-      onClick={handleConfiguratorOpen}
-    >
-      <Icon color="inherit">settings</Icon>
-    </SoftBox>
-  );
-
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      {layout === "dashboard" && (
-        <>
-          <Sidenav
-            color={sidenavColor}
-            brand={""}
-            brandName="Little Wallet"
-            routes={routes}
-            onMouseEnter={handleOnMouseEnter}
-            onMouseLeave={handleOnMouseLeave}
-            triedToEagerConnect={triedToEagerConnect}
-          />
-          <Configurator />
-          {configsButton}
-        </>
-      )}
-      {layout === "vr" && <Configurator />}
-      {isConnected && (
-        <Routes>
-          {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/dashboard" />} />
-        </Routes>
-      )}
-    </ThemeProvider>
+    <CacheProvider
+      value={
+        rtlCache ??
+        createCache({
+          key: "rtl",
+          stylisPlugins: [rtlPlugin],
+        })
+      }
+    >
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {layout === "dashboard" && (
+          <>
+            <Sidenav
+              color={sidenavColor}
+              brand={brand}
+              brandName="Little Wallet"
+              routes={routes}
+              onMouseEnter={handleOnMouseEnter}
+              onMouseLeave={handleOnMouseLeave}
+              triedToEagerConnect={triedToEagerConnect}
+            />
+          </>
+        )}
+        {isConnected && (
+          <Routes>
+            {getRoutes(routes)}
+            <Route path="*" element={<Navigate to="/dashboard" />} />
+          </Routes>
+        )}
+      </ThemeProvider>
+    </CacheProvider>
   );
 }

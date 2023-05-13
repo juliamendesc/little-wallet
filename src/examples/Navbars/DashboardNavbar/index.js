@@ -37,13 +37,10 @@ import {
 } from "@/context";
 
 // Images
-import team2 from "@/assets/images/team-2.jpg";
-import logoSpotify from "@/assets/images/small-logos/logo-spotify.svg";
 import Link from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 function DashboardNavbar({ absolute, light, isMini }) {
-  if (window === undefined) return null;
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useSoftUIController();
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator } = controller;
@@ -95,13 +92,13 @@ function DashboardNavbar({ absolute, light, isMini }) {
       sx={{ mt: 2 }}
     >
       <NotificationItem
-        image={<img src={team2} alt="person" />}
+        image={<img src={""} alt="person" />}
         title={["New message", "from Laur"]}
         date="13 minutes ago"
         onClick={handleCloseMenu}
       />
       <NotificationItem
-        image={<img src={logoSpotify} alt="person" />}
+        image={<img src={""} alt="person" />}
         title={["New album", "by Travis Scott"]}
         date="1 day"
         onClick={handleCloseMenu}

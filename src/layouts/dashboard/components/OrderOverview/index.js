@@ -1,6 +1,5 @@
 // @mui material components
 import Card from "@mui/material/Card";
-import Icon from "@mui/material/Icon";
 
 // Soft UI Dashboard React components
 import SoftBox from "@/components/SoftBox";
@@ -8,29 +7,58 @@ import SoftTypography from "@/components/SoftTypography";
 
 // Soft UI Dashboard React examples
 import TimelineItem from "@/examples/Timeline/TimelineItem";
+import SoftButton from "@/components/SoftButton";
+import CreateNewStake from "./createNewStake";
+import { useState } from "react";
+import { Box, Modal } from "@mui/material";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 function OrdersOverview() {
+  const [open, setOpen] = useState();
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
-    <Card className="h-100">
-      <SoftBox pt={3} px={3}>
+    <Card>
+      <SoftBox
+        pt={3}
+        px={3}
+        display="flex"
+        flexDirection="row"
+        justifyContent="space-between"
+        alignContent="space-between"
+      >
         <SoftTypography variant="h6" fontWeight="medium">
-          Orders overview
+          Stake - Invest in your future
         </SoftTypography>
-        <SoftBox mt={1} mb={2}>
-          <SoftTypography variant="button" color="text" fontWeight="regular">
-            <SoftTypography display="inline" variant="body2" verticalAlign="middle">
-              <Icon sx={{ fontWeight: "bold", color: ({ palette: { success } }) => success.main }}>
-                arrow_upward
-              </Icon>
-            </SoftTypography>
-            &nbsp;
-            <SoftTypography variant="button" color="text" fontWeight="medium">
-              24%
-            </SoftTypography>{" "}
-            this month
-          </SoftTypography>
-        </SoftBox>
+        <SoftButton color="info" variant="gradient" onClick={handleOpen}>
+          Request new stake
+        </SoftButton>
       </SoftBox>
+      {open && (
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <CreateNewStake />
+          </Box>
+        </Modal>
+      )}
       <SoftBox p={2}>
         <TimelineItem
           color="success"
@@ -62,7 +90,6 @@ function OrdersOverview() {
           title="New card added for order #4395133"
           dateTime="18 DEC 4:54 AM"
         />
-        <TimelineItem color="dark" icon="paid" title="New order #9583120" dateTime="17 DEC" />
       </SoftBox>
     </Card>
   );

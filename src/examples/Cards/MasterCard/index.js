@@ -9,10 +9,6 @@ import Icon from "@mui/material/Icon";
 import SoftBox from "@/components/SoftBox";
 import SoftTypography from "@/components/SoftTypography";
 
-// Images
-import curved14 from "@/assets/images/curved-images/curved14.jpg";
-import masterCardLogo from "@/assets/images/logos/mastercard.png";
-
 function MasterCard({ color, number, holder, expires }) {
   const numbers = [...`${number}`];
 
@@ -38,11 +34,11 @@ function MasterCard({ color, number, holder, expires }) {
           ? `${linearGradient(
               rgba(gradients[color].main, 0.8),
               rgba(gradients[color].state, 0.8)
-            )}, url(${curved14})`
+            )}, url(${""})`
           : `${linearGradient(
               rgba(gradients.dark.main, 0.8),
               rgba(gradients.dark.state, 0.8)
-            )}, url(${curved14})`,
+            )}, url(${""})`,
         boxShadow: xl,
       })}
     >
@@ -78,7 +74,7 @@ function MasterCard({ color, number, holder, expires }) {
             </SoftBox>
           </SoftBox>
           <SoftBox display="flex" justifyContent="flex-end" width="20%">
-            <SoftBox component="img" src={masterCardLogo} alt="master card" width="60%" mt={1} />
+            <SoftBox component="img" src={""} alt="master card" width="60%" mt={1} />
           </SoftBox>
         </SoftBox>
       </SoftBox>

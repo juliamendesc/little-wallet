@@ -7,10 +7,6 @@ import Icon from "@mui/material/Icon";
 import SoftBox from "@/components/SoftBox";
 import SoftTypography from "@/components/SoftTypography";
 
-// Images
-import wavesWhite from "@/assets/images/shapes/waves-white.svg";
-import rocketWhite from "@/assets/images/illustrations/rocket-white.png";
-
 function BuildByDevelopers() {
   return (
     <Card>
@@ -73,7 +69,7 @@ function BuildByDevelopers() {
             >
               <SoftBox
                 component="img"
-                src={wavesWhite}
+                src={""}
                 alt="waves"
                 display="block"
                 position="absolute"
@@ -81,7 +77,7 @@ function BuildByDevelopers() {
                 width="100%"
                 height="100%"
               />
-              <SoftBox component="img" src={rocketWhite} alt="rocket" width="100%" pt={3} />
+              <SoftBox component="img" src={""} alt="rocket" width="100%" pt={3} />
             </SoftBox>
           </Grid>
         </Grid>

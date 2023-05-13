@@ -15,17 +15,19 @@ import Icon from "@mui/material/Icon";
 // Soft UI Dashboard React components
 import SoftBox from "@/components/SoftBox";
 import SoftTypography from "@/components/SoftTypography";
-import SoftButton from "@/components/SoftButton";
 
 // Soft UI Dashboard React examples
 import SidenavCollapse from "@/examples/Sidenav/SidenavCollapse";
 
 // Custom styles for the Sidenav
 import SidenavRoot from "@/examples/Sidenav/SidenavRoot";
-import sidenavLogoLabel from "@/examples/Sidenav/styles/sidenav";
 
 // Soft UI Dashboard React context
 import { useSoftUIController, setMiniSidenav } from "@/context";
+import Image from "next/image";
+import { Typography } from "@mui/material";
+import useENSName from "hooks/useENSName";
+import { useWeb3React } from "@web3-react/core";
 
 // eslint-disable-next-line react/prop-types
 function Sidenav({ color, brand, brandName, routes, triedToEagerConnect, ...rest }) {
@@ -34,6 +36,9 @@ function Sidenav({ color, brand, brandName, routes, triedToEagerConnect, ...rest
   const location = useLocation();
   const { pathname } = location;
   const collapseName = pathname.split("/").slice(1)[0];
+  const { active, error, activate, chainId, account, setError } = useWeb3React();
+
+  const ENSName = useENSName(account);
 
   const closeSidenav = () => setMiniSidenav(dispatch, true);
 
@@ -116,7 +121,7 @@ function Sidenav({ color, brand, brandName, routes, triedToEagerConnect, ...rest
 
   return (
     <SidenavRoot {...rest} variant="permanent" ownerState={{ transparentSidenav, miniSidenav }}>
-      <SoftBox pt={3} pb={1} px={4} textAlign="center">
+      <SoftBox textAlign="center" className="flex ">
         <SoftBox
           display={{ xs: "block", xl: "none" }}
           position="absolute"
@@ -130,16 +135,9 @@ function Sidenav({ color, brand, brandName, routes, triedToEagerConnect, ...rest
             <Icon sx={{ fontWeight: "bold" }}>close</Icon>
           </SoftTypography>
         </SoftBox>
-        <SoftBox component={NavLink} to="/" display="flex" alignItems="center">
-          {brand && <SoftBox component="img" src={brand} alt="Soft UI Logo" width="2rem" />}
-          <SoftBox
-            width={!brandName && "100%"}
-            sx={(theme) => sidenavLogoLabel(theme, { miniSidenav })}
-          >
-            <SoftTypography component="h6" variant="button" fontWeight="medium">
-              {brandName}
-            </SoftTypography>
-          </SoftBox>
+        <SoftBox component={NavLink} to="/">
+          {brand && <Image src={brand.src} alt="Soft UI Logo" width={250} height={250} />}
+          <Typography>Welcome {ENSName}</Typography>
         </SoftBox>
       </SoftBox>
       <Divider />
