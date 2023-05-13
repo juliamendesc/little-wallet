@@ -21,18 +21,20 @@ import PropTypes from "prop-types";
 // Custom styles for SoftButton
 import SoftButtonRoot from "@/components/SoftButton/SoftButtonRoot";
 
-const SoftButton = forwardRef(({ color, variant, size, circular, iconOnly, ...rest }, ref) => (
-  <SoftButtonRoot
-    {...rest}
-    ref={ref}
-    color="primary"
-    variant={variant === "gradient" ? "contained" : variant}
-    size={size}
-    ownerState={{ color, variant, size, circular, iconOnly }}
-  >
-    {rest.children}
-  </SoftButtonRoot>
-));
+const SoftButton = forwardRef(
+  ({ color, variant, size, circular, iconOnly, children, ...rest }, ref) => (
+    <SoftButtonRoot
+      {...rest}
+      ref={ref}
+      color="primary"
+      variant={variant === "gradient" ? "contained" : variant}
+      size={size}
+      ownerState={{ color, variant, size, circular, iconOnly }}
+    >
+      {children}
+    </SoftButtonRoot>
+  )
+);
 
 // Setting default values for the props of SoftButton
 SoftButton.defaultProps = {

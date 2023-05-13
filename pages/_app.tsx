@@ -15,11 +15,11 @@ function NextWeb3App({ Component, pageProps }: AppProps) {
   return render ? (
     <BrowserRouter>
       <SoftUIControllerProvider>
-        <LoginProvider>
-          <Web3ReactProvider getLibrary={getLibrary}>
+        <Web3ReactProvider getLibrary={getLibrary}>
+          <LoginProvider>
             <Component {...pageProps} />
-          </Web3ReactProvider>
-        </LoginProvider>
+          </LoginProvider>
+        </Web3ReactProvider>
       </SoftUIControllerProvider>
     </BrowserRouter>
   ) : null;

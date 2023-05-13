@@ -68,6 +68,7 @@ const Account = ({ triedToEagerConnect }: AccountProps) => {
             }}
           >
             <SoftTypography
+              className="bg-white"
               component={Link}
               to="/authentication/sign-in"
               variant="button"
@@ -96,9 +97,9 @@ const Account = ({ triedToEagerConnect }: AccountProps) => {
       }}
     >
       Your wallet: {ENSName || `${shortenHex(account, 4)}`}
-      <a href="#" className="close">
+      {/* <a href="#" className="close">
         X
-      </a>
+      </a> */}
     </a>
   );
 };
