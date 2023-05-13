@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useContext } from "react";
 
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
@@ -39,14 +39,14 @@ import Connect from "@/layouts/connect";
 // Soft UI Dashboard React icons
 import Shop from "@/examples/Icons/Shop";
 import Document from "@/examples/Icons/Document";
+import { LoginContext } from "@/context/loginContext";
 
 const DAI_TOKEN_ADDRESS = "0x6b175474e89094c44da98b954eedeac495271d0f";
 
 export default function App() {
   const [controller, dispatch] = useSoftUIController();
-  const { miniSidenav, direction, layout, openConfigurator, sidenavColor } = controller;
+  const { miniSidenav, direction, layout, sidenavColor } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
-  const [rtlCache, setRtlCache] = useState(null);
   const { pathname } = useLocation();
 
   const { account, library } = useWeb3React();
@@ -56,6 +56,10 @@ export default function App() {
   const isConnected = typeof account === "string" && !!library;
 
   const dashboardProps = {
+    account,
+    library,
+    triedToEagerConnect,
+    isConnected,
     ETHBalance,
     TokenBalance,
   };
@@ -76,20 +80,10 @@ export default function App() {
       key: "dashboard",
       route: "/dashboard",
       icon: <Shop size="12px" />,
-      component: <Dashboard />,
+      component: <Dashboard dashboardProps={dashboardProps} />,
       noCollapse: true,
     },
   ];
-
-  // Cache for the rtl
-  useMemo(() => {
-    const cacheRtl = createCache({
-      key: "rtl",
-      stylisPlugins: [rtlPlugin],
-    });
-
-    setRtlCache(cacheRtl);
-  }, []);
 
   // Open sidenav when mouse enter on mini sidenav
   const handleOnMouseEnter = () => {
@@ -106,9 +100,6 @@ export default function App() {
       setOnMouseEnter(false);
     }
   };
-
-  // Change the openConfigurator state
-  const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
 
   // Setting the dir attribute for the body element
   useEffect(() => {
@@ -137,37 +128,25 @@ export default function App() {
     });
 
   return (
-    <CacheProvider
-      value={
-        rtlCache ??
-        createCache({
-          key: "rtl",
-          stylisPlugins: [rtlPlugin],
-        })
-      }
-    >
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        {layout === "dashboard" && (
-          <>
-            <Sidenav
-              color={sidenavColor}
-              brand={brand}
-              brandName="Little Wallet"
-              routes={routes}
-              onMouseEnter={handleOnMouseEnter}
-              onMouseLeave={handleOnMouseLeave}
-              triedToEagerConnect={triedToEagerConnect}
-            />
-          </>
-        )}
-        {isConnected && (
-          <Routes>
-            {getRoutes(routes)}
-            <Route path="*" element={<Navigate to="/dashboard" />} />
-          </Routes>
-        )}
-      </ThemeProvider>
-    </CacheProvider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      {layout === "dashboard" && (
+        <>
+          <Sidenav
+            color={sidenavColor}
+            brand={brand}
+            brandName="Little Wallet"
+            routes={routes}
+            onMouseEnter={handleOnMouseEnter}
+            onMouseLeave={handleOnMouseLeave}
+            triedToEagerConnect={triedToEagerConnect}
+          />
+        </>
+      )}
+      <Routes>
+        {getRoutes(routes)}
+        <Route path="*" element={<Navigate to="/dashboard" />} />
+      </Routes>
+    </ThemeProvider>
   );
 }

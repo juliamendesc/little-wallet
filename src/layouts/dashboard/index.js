@@ -16,7 +16,12 @@ import OrderOverview from "@/layouts/dashboard/components/OrderOverview";
 // Data
 import Transactions from "./components/Transactions";
 
-function Dashboard() {
+const Dashboard = (dashboardProps) => {
+  const { account, library, triedToEagerConnect, isConnected, ETHBalance, TokenBalance } =
+    dashboardProps;
+
+  console.log("isConnected", isConnected);
+
   return (
     <DashboardLayout>
       <SoftBox py={3}>
@@ -63,6 +68,6 @@ function Dashboard() {
       </SoftBox>
     </DashboardLayout>
   );
-}
+};
 
 export default Dashboard;

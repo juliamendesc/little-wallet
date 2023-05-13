@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 
 import { SoftUIControllerProvider } from "@/context";
 import { useEffect, useState } from "react";
+import LoginProvider from "@/context/loginContext";
 
 function NextWeb3App({ Component, pageProps }: AppProps) {
   const [render, setRender] = useState(false);
@@ -14,9 +15,11 @@ function NextWeb3App({ Component, pageProps }: AppProps) {
   return render ? (
     <BrowserRouter>
       <SoftUIControllerProvider>
-        <Web3ReactProvider getLibrary={getLibrary}>
-          <Component {...pageProps} />
-        </Web3ReactProvider>
+        <LoginProvider>
+          <Web3ReactProvider getLibrary={getLibrary}>
+            <Component {...pageProps} />
+          </Web3ReactProvider>
+        </LoginProvider>
       </SoftUIControllerProvider>
     </BrowserRouter>
   ) : null;

@@ -1,6 +1,6 @@
 import { useWeb3React } from "@web3-react/core";
 import { UserRejectedRequestError } from "@web3-react/injected-connector";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { injected } from "../connectors";
 import useENSName from "../hooks/useENSName";
 import useMetaMaskOnboarding from "../hooks/useMetaMaskOnboarding";
@@ -8,35 +8,42 @@ import { formatEtherscanLink, shortenHex } from "../util";
 import SoftButton from "@/components/SoftButton";
 import SoftTypography from "@/components/SoftTypography";
 import { Link } from "react-router-dom";
+import { LoginContext } from "@/context/loginContext";
 
 type AccountProps = {
   triedToEagerConnect: boolean;
 };
 
 const Account = ({ triedToEagerConnect }: AccountProps) => {
-  const { active, error, activate, chainId, account, setError } = useWeb3React();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const { isMetaMaskInstalled, isWeb3Available, startOnboarding, stopOnboarding } =
-    useMetaMaskOnboarding();
+  const {
+    isAuthenticated,
+    login,
+    logout,
+    web3,
+    error,
+    activate,
+    chainId,
+    account,
+    setError,
+    ENSName,
+    active,
+    setIsAuthenticated,
+    connecting,
+    setConnecting,
+    isMetaMaskInstalled,
+    isWeb3Available,
+    startOnboarding,
+    stopOnboarding,
+  } = useContext(LoginContext);
 
-  // manage connecting state for injected connector
-  const [connecting, setConnecting] = useState(false);
   useEffect(() => {
     if (active || error) {
       setConnecting(false);
       stopOnboarding();
     }
   }, [active, error, stopOnboarding]);
-
-  const ENSName = useENSName(account);
-
-  if (error) {
-    return null;
-  }
-
-  if (!triedToEagerConnect) {
-    return null;
-  }
 
   if (typeof account !== "string") {
     return (
@@ -64,7 +71,7 @@ const Account = ({ triedToEagerConnect }: AccountProps) => {
               component={Link}
               to="/authentication/sign-in"
               variant="button"
-              color="dark"
+              color="white"
               fontWeight="bold"
               textGradient
             >
@@ -89,6 +96,9 @@ const Account = ({ triedToEagerConnect }: AccountProps) => {
       }}
     >
       Your wallet: {ENSName || `${shortenHex(account, 4)}`}
+      <a href="#" className="close">
+        X
+      </a>
     </a>
   );
 };

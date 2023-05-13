@@ -1,5 +1,6 @@
 // react-router-dom components
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -13,8 +14,7 @@ import SoftTypography from "@/components/SoftTypography";
 import BasicLayout from "./components/BasicLayout";
 import Account from "components/Account";
 
-// eslint-disable-next-line react/prop-types
-function Connect({ triedToEagerConnect }) {
+function Connect({ triedToEagerConnect, handleLogout }) {
   return (
     <BasicLayout title="Little Wallet" description="Connect your wallet for live demo.">
       <Card>
@@ -30,7 +30,7 @@ function Connect({ triedToEagerConnect }) {
                   fontWeight="bold"
                   textGradient
                 >
-                  <Account triedToEagerConnect={triedToEagerConnect} />
+                  <Account triedToEagerConnect={triedToEagerConnect} handleLogout={handleLogout} />
                 </SoftTypography>
               </SoftTypography>
             </SoftBox>
@@ -40,5 +40,10 @@ function Connect({ triedToEagerConnect }) {
     </BasicLayout>
   );
 }
+
+Connect.propTypes = {
+  triedToEagerConnect: PropTypes.bool.isRequired,
+  handleLogout: PropTypes.func.isRequired,
+};
 
 export default Connect;
