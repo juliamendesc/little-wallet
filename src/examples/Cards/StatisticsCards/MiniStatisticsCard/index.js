@@ -4,13 +4,12 @@ import PropTypes from "prop-types";
 // @mui material components
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
-import Icon from "@mui/material/Icon";
 
 // Soft UI Dashboard React components
 import SoftBox from "@/components/SoftBox";
 import SoftTypography from "@/components/SoftTypography";
 
-function MiniStatisticsCard({ bgColor, title, count, percentage, icon, direction }) {
+function MiniStatisticsCard({ bgColor, title, count, percentage, direction }) {
   return (
     <Card>
       <SoftBox bgColor={bgColor} variant="gradient">
@@ -32,7 +31,7 @@ function MiniStatisticsCard({ bgColor, title, count, percentage, icon, direction
                   fontWeight="bold"
                   color={bgColor === "white" ? "dark" : "white"}
                 >
-                  {count}{" "}
+                  {count}
                   <SoftTypography variant="button" color={percentage.color} fontWeight="bold">
                     {percentage.text}
                   </SoftTypography>
@@ -90,10 +89,6 @@ MiniStatisticsCard.propTypes = {
     ]),
     text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }),
-  icon: PropTypes.shape({
-    color: PropTypes.oneOf(["primary", "secondary", "info", "success", "warning", "error", "dark"]),
-    component: PropTypes.node.isRequired,
-  }).isRequired,
   direction: PropTypes.oneOf(["right", "left"]),
 };
 

@@ -31,20 +31,20 @@ import Document from "@/examples/Icons/Document";
 const routes = [
   {
     type: "collapse",
-    name: "Dashboard",
-    key: "dashboard",
-    route: "/dashboard",
-    icon: <Shop size="12px" />,
-    component: <Dashboard />,
-    noCollapse: true,
-  },
-  {
-    type: "collapse",
     name: "Connect",
     key: "connect",
     route: "/connect",
     icon: <Document size="12px" />,
     component: <Connect triedToEagerConnect={triedToEagerConnect} />,
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "Dashboard",
+    key: "dashboard",
+    route: "/dashboard",
+    icon: <Shop size="12px" />,
+    component: <Dashboard />,
     noCollapse: true,
   },
 ];

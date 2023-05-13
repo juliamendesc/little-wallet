@@ -64,7 +64,9 @@ function DashboardNavbar({ absolute, light, isMini }) {
      The event listener that's calling the handleTransparentNavbar function when
      scrolling the window.
     */
-    window.addEventListener("scroll", handleTransparentNavbar);
+    if (window !== undefined) {
+      window.addEventListener("scroll", handleTransparentNavbar);
+    }
 
     // Call the handleTransparentNavbar function to set the state with the initial value.
     handleTransparentNavbar();
@@ -74,7 +76,6 @@ function DashboardNavbar({ absolute, light, isMini }) {
   }, [dispatch, fixedNavbar]);
 
   const handleMiniSidenav = () => setMiniSidenav(dispatch, !miniSidenav);
-  const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
   const handleCloseMenu = () => setOpenMenu(false);
 

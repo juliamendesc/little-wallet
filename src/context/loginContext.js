@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import Web3 from "web3";
 import { useWeb3React } from "@web3-react/core";
 import useMetaMaskOnboarding from "hooks/useMetaMaskOnboarding";
 import useEagerConnect from "hooks/useEagerConnect";
@@ -11,6 +10,8 @@ export const LoginContext = createContext();
 // eslint-disable-next-line react/prop-types
 const LoginProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isConnecting, setIsConnecting] = useState(false);
   const { active, error, activate, chainId, account, setError } = useWeb3React();
 
   const { isMetaMaskInstalled, isWeb3Available, startOnboarding, stopOnboarding } =
@@ -33,6 +34,11 @@ const LoginProvider = ({ children }) => {
 
   const value = {
     isAuthenticated,
+    isLoggedIn,
+    setIsLoggedIn,
+    isConnecting,
+    setIsConnecting,
+    setConnecting,
     triedToEagerConnect,
     web3,
     error,
@@ -44,7 +50,6 @@ const LoginProvider = ({ children }) => {
     active,
     setIsAuthenticated,
     connecting,
-    setConnecting,
     isMetaMaskInstalled,
     isWeb3Available,
     startOnboarding,
@@ -54,7 +59,7 @@ const LoginProvider = ({ children }) => {
   return <LoginContext.Provider value={value}>{children}</LoginContext.Provider>;
 };
 
-LoginProvider.PropTypes = {
+LoginProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 

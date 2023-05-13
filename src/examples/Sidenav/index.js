@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 
 // react-router-dom components
 import { NavLink, useLocation } from "react-router-dom";
@@ -26,19 +26,21 @@ import SidenavRoot from "@/examples/Sidenav/SidenavRoot";
 import { useSoftUIController, setMiniSidenav } from "@/context";
 import Image from "next/image";
 import { Typography } from "@mui/material";
-import useENSName from "hooks/useENSName";
-import { useWeb3React } from "@web3-react/core";
+import { LoginContext } from "@/context/loginContext";
+import { shortenHex } from "@/util";
 
-// eslint-disable-next-line react/prop-types
-function Sidenav({ color, brand, brandName, routes, triedToEagerConnect, ...rest }) {
+function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const [controller, dispatch] = useSoftUIController();
   const { miniSidenav, transparentSidenav } = controller;
   const location = useLocation();
   const { pathname } = location;
   const collapseName = pathname.split("/").slice(1)[0];
-  const { active, error, activate, chainId, account, setError } = useWeb3React();
 
-  const ENSName = useENSName(account);
+  const { isLoggedIn, ENSName, account, chainId } = useContext(LoginContext);
+
+  console.log("ENSName", ENSName);
+  console.log("account", account);
+  console.log("chainId", chainId);
 
   const closeSidenav = () => setMiniSidenav(dispatch, true);
 
@@ -137,7 +139,14 @@ function Sidenav({ color, brand, brandName, routes, triedToEagerConnect, ...rest
         </SoftBox>
         <SoftBox component={NavLink} to="/">
           {brand && <Image src={brand.src} alt="Soft UI Logo" width={250} height={250} />}
-          <Typography>Welcome {ENSName}</Typography>
+          <Typography variant="h6" color="secondary">
+            Welcome!
+          </Typography>
+          {account && (
+            <Typography variant="h6" color="secondary">
+              Wallet: {shortenHex(account, 4)}
+            </Typography>
+          )}
         </SoftBox>
       </SoftBox>
       <Divider />
@@ -149,13 +158,13 @@ function Sidenav({ color, brand, brandName, routes, triedToEagerConnect, ...rest
 // Setting default values for the props of Sidenav
 Sidenav.defaultProps = {
   color: "info",
-  brand: "",
+  brand: {},
 };
 
 // Typechecking props for the Sidenav
 Sidenav.propTypes = {
   color: PropTypes.oneOf(["primary", "secondary", "info", "success", "warning", "error", "dark"]),
-  brand: PropTypes.string,
+  brand: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
   brandName: PropTypes.string.isRequired,
   routes: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

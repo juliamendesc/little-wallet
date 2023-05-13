@@ -15,58 +15,85 @@ import OrderOverview from "@/layouts/dashboard/components/OrderOverview";
 
 // Data
 import Transactions from "./components/Transactions";
+import { useContext, useEffect } from "react";
+import { LoginContext } from "@/context/loginContext";
 
-const Dashboard = (dashboardProps) => {
-  const { account, library, triedToEagerConnect, isConnected, ETHBalance, TokenBalance } =
-    dashboardProps;
+const Dashboard = () => {
+  const {
+    isLoggedIn,
+    setIsLoggedIn,
+    setIsConnecting,
+    error,
+    activate,
+    chainId,
+    account,
+    setError,
+    ENSName,
+    active,
+    setIsAuthenticated,
+    stopOnboarding,
+  } = useContext(LoginContext);
 
-  console.log("isConnected", isConnected);
+  useEffect(() => {
+    if (active || error) {
+      if (active) {
+        setIsLoggedIn(true);
+      }
+      setIsConnecting(false);
+      stopOnboarding();
+    }
+
+    return () => {
+      setIsLoggedIn(false);
+      setIsAuthenticated(false);
+    };
+  }, [active, error, stopOnboarding]);
 
   return (
-    <DashboardLayout>
-      <SoftBox py={3}>
-        <SoftBox mb={3}>
+    isLoggedIn && (
+      <DashboardLayout>
+        <SoftBox py={3}>
+          <SoftBox mb={3}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={6} xl={6}>
+                <MiniStatisticsCard
+                  title={{ text: "Today's money" }}
+                  count="$53,000"
+                  percentage={{ color: "success", text: "+55%" }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} xl={6}>
+                <MiniStatisticsCard
+                  title={{ text: "Blocked money" }}
+                  count="2,300"
+                  percentage={{ color: "success", text: "+3%" }}
+                />
+              </Grid>
+            </Grid>
+          </SoftBox>
+          <SoftBox mb={3}>
+            <Grid item xs={12} lg={5}>
+              <WorkWithTheRockets />
+            </Grid>
+          </SoftBox>
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={6} xl={6}>
-              <MiniStatisticsCard
-                title={{ text: "Today's money" }}
-                count="$53,000"
-                percentage={{ color: "success", text: "+55%" }}
-                icon={{ color: "", component: undefined }}
-              />
+            <Grid item xs={12} md={6} lg={6}>
+              <Projects />
             </Grid>
-            <Grid item xs={12} sm={6} xl={6}>
-              <MiniStatisticsCard
-                title={{ text: "Blocked money" }}
-                count="2,300"
-                percentage={{ color: "success", text: "+3%" }}
-                icon={{ color: "info", component: "public" }}
-              />
+            <Grid item xs={12} md={6} lg={6}>
+              <OrderOverview />
             </Grid>
           </Grid>
-        </SoftBox>
-        <SoftBox mb={3}>
-          <Grid item xs={12} lg={5}>
-            <WorkWithTheRockets />
-          </Grid>
-        </SoftBox>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6} lg={6}>
-            <Projects />
-          </Grid>
-          <Grid item xs={12} md={6} lg={6}>
-            <OrderOverview />
-          </Grid>
-        </Grid>
-        <SoftBox my={3}>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Transactions />
+          <SoftBox my={3}>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Transactions />
+              </Grid>
             </Grid>
-          </Grid>
+          </SoftBox>
         </SoftBox>
-      </SoftBox>
-    </DashboardLayout>
+      </DashboardLayout>
+    )
   );
 };
 

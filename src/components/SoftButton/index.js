@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { forwardRef } from "react";
+import { HTMLAttributes, forwardRef } from "react";
 
 // prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
@@ -43,6 +43,10 @@ SoftButton.defaultProps = {
   color: "white",
   circular: false,
   iconOnly: false,
+  fullWidth: false,
+  disabled: false,
+  onClick: () => {},
+  ownerState: {},
 };
 
 // Typechecking props for the SoftButton

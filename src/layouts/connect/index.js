@@ -1,7 +1,3 @@
-// react-router-dom components
-import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
-
 // @mui material components
 import Card from "@mui/material/Card";
 
@@ -14,24 +10,19 @@ import SoftTypography from "@/components/SoftTypography";
 import BasicLayout from "./components/BasicLayout";
 import Account from "components/Account";
 
-function Connect({ triedToEagerConnect, handleLogout }) {
+function Connect() {
   return (
-    <BasicLayout title="Little Wallet" description="Connect your wallet for live demo.">
+    <BasicLayout
+      className="text-black"
+      title="Tiny Vault"
+      description="Connect your wallet for live demo."
+    >
       <Card>
         <SoftBox pt={2} pb={3} px={3}>
           <SoftBox component="form" role="form">
             <SoftBox mt={3} textAlign="center">
               <SoftTypography variant="button" color="text" fontWeight="regular">
-                <SoftTypography
-                  component={Link}
-                  to="/authentication/sign-in"
-                  variant="button"
-                  color="dark"
-                  fontWeight="bold"
-                  textGradient
-                >
-                  <Account triedToEagerConnect={triedToEagerConnect} handleLogout={handleLogout} />
-                </SoftTypography>
+                <Account />
               </SoftTypography>
             </SoftBox>
           </SoftBox>
@@ -40,10 +31,5 @@ function Connect({ triedToEagerConnect, handleLogout }) {
     </BasicLayout>
   );
 }
-
-Connect.propTypes = {
-  triedToEagerConnect: PropTypes.bool.isRequired,
-  handleLogout: PropTypes.func.isRequired,
-};
 
 export default Connect;
