@@ -18,6 +18,7 @@ import Transactions from "./components/Transactions";
 import { useContext, useEffect } from "react";
 import { LoginContext } from "@/context/loginContext";
 import ETHBalance from "components/ETHBalance";
+import Image from "next/image";
 
 const Dashboard = () => {
   const {
@@ -32,8 +33,6 @@ const Dashboard = () => {
   } = useContext(LoginContext);
 
   const balance = ETHBalance();
-
-  console.log("balance", balance);
 
   useEffect(() => {
     if (active || error) {
@@ -55,11 +54,16 @@ const Dashboard = () => {
       <DashboardLayout>
         <SoftBox py={3}>
           <SoftBox mb={3}>
-            <Grid item xs={12} sm={6} xl={6}>
-              <MiniStatisticsCard
-                title={{ text: "Today's money" }}
-                count={balance.props.children[1]}
-              />
+            <Grid container justifyContent="space-between">
+              <Grid item xs={12} sm={10} xl={10.5}>
+                <MiniStatisticsCard
+                  title={{ text: "Today's money" }}
+                  count={balance.props.children[1]}
+                />
+              </Grid>
+              <Grid item xs={12} sm={2} xl={1} marginTop={1}>
+                <Image src="/noun_1.png" alt="Soft UI Logo" width={75} height={75} />
+              </Grid>
             </Grid>
           </SoftBox>
           <SoftBox mb={3}>

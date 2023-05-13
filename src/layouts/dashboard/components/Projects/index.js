@@ -14,6 +14,9 @@ import SoftButton from "@/components/SoftButton";
 import { Box, Modal } from "@mui/material";
 import CreateNewSavings from "./createNewSavings";
 import { useState } from "react";
+import SoftProgress from "@/components/SoftProgress";
+import Image from "next/image";
+import plusIcon from "@/assets/images/plus-circle.svg";
 
 const style = {
   position: "absolute",
@@ -28,7 +31,7 @@ const style = {
 };
 
 function Projects() {
-  const { columns, rows } = data();
+  const { columns, rows, handleClickAddRow } = data();
   const [open, setOpen] = useState();
 
   const handleOpen = () => setOpen(true);
@@ -61,7 +64,7 @@ function Projects() {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <CreateNewSavings />
+            <CreateNewSavings handleClickAddRow />
           </Box>
         </Modal>
       )}

@@ -4,14 +4,42 @@ import SoftTypography from "@/components/SoftTypography";
 import SoftProgress from "@/components/SoftProgress";
 
 import plusIcon from "@/assets/images/plus-circle.svg";
+import Image from "next/image";
+import { Box } from "@mui/material";
 
 export default function data() {
+  function handleClickAddRow(purpose, amount) {
+    rows.push({
+      purpose: ["", purpose],
+      budget: (
+        <SoftTypography variant="caption" color="text" fontWeight="medium">
+          ${amount}
+        </SoftTypography>
+      ),
+      completion: (
+        <SoftBox width="8rem" textAlign="left">
+          <SoftProgress value={0} color="info" variant="gradient" label={0} />
+        </SoftBox>
+      ),
+      fund: (
+        <Box onClick={handleClick} className="cursor-pointer text-center mt-1">
+          <Image src={plusIcon} alt="Soft UI Logo" width={20} height={20} />
+        </Box>
+      ),
+    });
+  }
+
+  function handleClick() {
+    console.log("clicked");
+  }
+
   return {
+    handleClickAddRow,
     columns: [
       { name: "purpose", align: "left" },
       { name: "budget", align: "center" },
       { name: "completion", align: "center" },
-      { name: "fund", align: "center", icon: "plusIcon" },
+      { name: "fund", align: "center" },
     ],
 
     rows: [
@@ -27,6 +55,11 @@ export default function data() {
             <SoftProgress value={60} color="info" variant="gradient" label={60} />
           </SoftBox>
         ),
+        fund: (
+          <Box onClick={handleClick} className="cursor-pointer text-center mt-1">
+            <Image src={plusIcon} alt="Soft UI Logo" width={20} height={20} />
+          </Box>
+        ),
       },
       {
         purpose: ["", "Add Progress Track"],
@@ -40,6 +73,11 @@ export default function data() {
             <SoftProgress value={10} color="info" variant="gradient" label={10} />
           </SoftBox>
         ),
+        fund: (
+          <Box onClick={handleClick} className="cursor-pointer text-center mt-1">
+            <Image src={plusIcon} alt="Soft UI Logo" width={20} height={20} />
+          </Box>
+        ),
       },
       {
         purpose: ["", "Fix Platform Errors"],
@@ -49,9 +87,14 @@ export default function data() {
           </SoftTypography>
         ),
         completion: (
-          <SoftBox width="8rem" textAlign="left">
+          <SoftBox width="8rem" textAlign="left" onClick={handleClick}>
             <SoftProgress value={100} color="success" variant="gradient" label={100} />
           </SoftBox>
+        ),
+        fund: (
+          <Box onClick={handleClick} className="cursor-pointer text-center mt-1">
+            <Image src={plusIcon} alt="Soft UI Logo" width={20} height={20} />
+          </Box>
         ),
       },
       {
@@ -66,6 +109,11 @@ export default function data() {
             <SoftProgress value={100} color="success" variant="gradient" label={100} />
           </SoftBox>
         ),
+        fund: (
+          <Box onClick={handleClick} className="cursor-pointer text-center mt-1">
+            <Image src={plusIcon} alt="Soft UI Logo" width={20} height={20} />
+          </Box>
+        ),
       },
       {
         purpose: ["", "Add the New Pricing Page"],
@@ -78,6 +126,11 @@ export default function data() {
           <SoftBox width="8rem" textAlign="left">
             <SoftProgress value={25} color="info" variant="gradient" label={25} />
           </SoftBox>
+        ),
+        fund: (
+          <Box onClick={handleClick} className="cursor-pointer text-center mt-1">
+            <Image src={plusIcon} alt="Soft UI Logo" width={20} height={20} />
+          </Box>
         ),
       },
     ],

@@ -58,9 +58,7 @@ const Account = () => {
     };
   }, [active, error, stopOnboarding]);
 
-  console.log("isAuthenticated", isAuthenticated);
   console.log("isLoggedIn", isLoggedIn);
-  console.log("connecting", connecting);
 
   if (typeof account !== "string") {
     return (
