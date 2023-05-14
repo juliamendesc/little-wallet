@@ -139,14 +139,6 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
         </SoftBox>
         <SoftBox component={NavLink} to="/">
           {brand && <Image src={brand.src} alt="Soft UI Logo" width={250} height={250} />}
-          <Typography variant="h6" color="secondary">
-            Welcome!
-          </Typography>
-          {account && (
-            <Typography variant="h6" color="secondary">
-              Wallet: {shortenHex(account, 4)}
-            </Typography>
-          )}
         </SoftBox>
       </SoftBox>
       <Divider />

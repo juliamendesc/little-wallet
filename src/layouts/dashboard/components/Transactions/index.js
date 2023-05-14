@@ -9,6 +9,7 @@ import SoftTypography from "@/components/SoftTypography";
 
 // Billing page components
 import Transaction from "../Transaction";
+import { transactionsMockData } from "./mock";
 
 function Transactions() {
   return (
@@ -32,48 +33,22 @@ function Transactions() {
           m={0}
           sx={{ listStyle: "none" }}
         >
-          <Transaction
-            color="error"
-            icon="arrow_downward"
-            name="Netflix"
-            description="27 March 2020, at 12:30 PM"
-            value="- $ 2,500"
-          />
-          <Transaction
-            color="success"
-            icon="arrow_upward"
-            name="Apple"
-            description="27 March 2020, at 04:30 AM"
-            value="+ $ 2,000"
-          />
-          <Transaction
-            color="success"
-            icon="arrow_upward"
-            name="Stripe"
-            description="26 March 2020, at 13:45 PM"
-            value="+ $ 750"
-          />
-          <Transaction
-            color="success"
-            icon="arrow_upward"
-            name="HubSpot"
-            description="26 March 2020, at 12:30 PM"
-            value="+ $ 1,000"
-          />
-          <Transaction
-            color="success"
-            icon="arrow_upward"
-            name="Creative Tim"
-            description="26 March 2020, at 08:30 AM"
-            value="+ $ 2,500"
-          />
-          <Transaction
-            color="dark"
-            icon="priority_high"
-            name="Webflow"
-            description="26 March 2020, at 05:00 AM"
-            value="Pending"
-          />
+          {transactionsMockData.map((transaction) => (
+            <Transaction
+              key={transaction.id}
+              color={transaction.color}
+              icon={transaction.icon}
+              name={transaction.name}
+              description={transaction.description}
+              value={
+                transaction.value === "Pending"
+                  ? transaction.value
+                  : transaction.color === "error"
+                  ? "-" + transaction.value
+                  : "+" + transaction.value
+              }
+            />
+          ))}
         </SoftBox>
       </SoftBox>
     </Card>

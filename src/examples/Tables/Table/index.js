@@ -21,6 +21,8 @@ import SoftTypography from "@/components/SoftTypography";
 import colors from "@/assets/theme/base/colors";
 import typography from "@/assets/theme/base/typography";
 import borders from "@/assets/theme/base/borders";
+import savingsIcon from "@/assets/images/icons8-savings-96.png";
+import Image from "next/image";
 
 function Table({ columns, rows }) {
   const { light } = colors;
@@ -63,7 +65,7 @@ function Table({ columns, rows }) {
     );
   });
 
-  const renderRows = rows.map((row, key) => {
+  const renderRows = rows.flat().map((row, key) => {
     const rowKey = `row-${key}`;
 
     const tableRow = columns.map(({ name, align }) => {
@@ -79,7 +81,13 @@ function Table({ columns, rows }) {
           >
             <SoftBox display="flex" alignItems="center" py={0.5} px={1}>
               <SoftBox mr={2}>
-                <SoftAvatar src={""} name={row[name][1]} variant="rounded" size="sm" />
+                <Image
+                  src={savingsIcon}
+                  name={row[name][1]}
+                  width={24}
+                  height={24}
+                  alt="savings icon"
+                />
               </SoftBox>
               <SoftTypography variant="button" fontWeight="medium" sx={{ width: "max-content" }}>
                 {row[name][1]}
@@ -107,7 +115,6 @@ function Table({ columns, rows }) {
           </SoftBox>
         );
       }
-
       return template;
     });
 

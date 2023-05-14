@@ -11,6 +11,7 @@ import SoftButton from "@/components/SoftButton";
 import CreateNewStake from "./createNewStake";
 import { useState } from "react";
 import { Box, Modal } from "@mui/material";
+import { stakeMockData } from "./mockData";
 
 const style = {
   position: "absolute",
@@ -55,41 +56,20 @@ function OrdersOverview() {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <CreateNewStake />
+            <CreateNewStake handleClose={handleClose} />
           </Box>
         </Modal>
       )}
       <SoftBox p={2}>
-        <TimelineItem
-          color="success"
-          icon="notifications"
-          title="$2400, Design changes"
-          dateTime="22 DEC 7:20 PM"
-        />
-        <TimelineItem
-          color="error"
-          icon="inventory_2"
-          title="New order #1832412"
-          dateTime="21 DEC 11 PM"
-        />
-        <TimelineItem
-          color="info"
-          icon="shopping_cart"
-          title="Server payments for April"
-          dateTime="21 DEC 9:34 PM"
-        />
-        <TimelineItem
-          color="warning"
-          icon="payment"
-          title="New card added for order #4395133"
-          dateTime="20 DEC 2:20 AM"
-        />
-        <TimelineItem
-          color="primary"
-          icon="vpn_key"
-          title="New card added for order #4395133"
-          dateTime="18 DEC 4:54 AM"
-        />
+        {stakeMockData.map((stake) => (
+          <TimelineItem
+            key={stake.id}
+            color="success"
+            icon="notifications"
+            title={stake.amount + " ETH"}
+            dateTime={stake.duration}
+          />
+        ))}
       </SoftBox>
     </Card>
   );
