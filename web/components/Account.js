@@ -58,8 +58,6 @@ const Account = () => {
     };
   }, [active, error, stopOnboarding]);
 
-  console.log("isLoggedIn", isLoggedIn);
-
   if (typeof account !== "string") {
     return (
       <div>

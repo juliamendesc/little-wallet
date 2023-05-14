@@ -36,8 +36,6 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const { pathname } = location;
   const collapseName = pathname.split("/").slice(1)[0];
 
-  const { account, chainId, isLoggedIn } = useContext(LoginContext);
-
   const closeSidenav = () => setMiniSidenav(dispatch, true);
 
   useEffect(() => {
@@ -119,28 +117,28 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
 
   return (
     isLoggedIn && (
-    <SidenavRoot {...rest} variant="permanent" ownerState={{ transparentSidenav, miniSidenav }}>
-      <SoftBox textAlign="center" className="flex ">
-        <SoftBox
-          display={{ xs: "block", xl: "none" }}
-          position="absolute"
-          top={0}
-          right={0}
-          p={1.625}
-          onClick={closeSidenav}
-          sx={{ cursor: "pointer" }}
-        >
-          <SoftTypography variant="h6" color="secondary">
-            <Icon sx={{ fontWeight: "bold" }}>close</Icon>
-          </SoftTypography>
+      <SidenavRoot {...rest} variant="permanent" ownerState={{ transparentSidenav, miniSidenav }}>
+        <SoftBox textAlign="center" className="flex ">
+          <SoftBox
+            display={{ xs: "block", xl: "none" }}
+            position="absolute"
+            top={0}
+            right={0}
+            p={1.625}
+            onClick={closeSidenav}
+            sx={{ cursor: "pointer" }}
+          >
+            <SoftTypography variant="h6" color="secondary">
+              <Icon sx={{ fontWeight: "bold" }}>close</Icon>
+            </SoftTypography>
+          </SoftBox>
+          <SoftBox component={NavLink} to="/">
+            {brand && <Image src={brand.src} alt="Soft UI Logo" width={250} height={250} />}
+          </SoftBox>
         </SoftBox>
-        <SoftBox component={NavLink} to="/">
-          {brand && <Image src={brand.src} alt="Soft UI Logo" width={250} height={250} />}
-        </SoftBox>
-      </SoftBox>
-      <Divider />
-      <List>{renderRoutes}</List>
-    </SidenavRoot>
+        <Divider />
+        <List>{renderRoutes}</List>
+      </SidenavRoot>
     )
   );
 }
