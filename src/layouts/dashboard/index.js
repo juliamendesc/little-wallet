@@ -19,6 +19,9 @@ import { useContext, useEffect } from "react";
 import { LoginContext } from "@/context/loginContext";
 import ETHBalance from "components/ETHBalance";
 import Image from "next/image";
+import { Typography } from "@mui/material";
+import { NavLink } from "react-router-dom";
+import { shortenHex } from "@/util";
 
 const Dashboard = () => {
   const {
@@ -29,6 +32,7 @@ const Dashboard = () => {
     active,
     setIsAuthenticated,
     stopOnboarding,
+    account,
   } = useContext(LoginContext);
 
   const balance = ETHBalance();
@@ -54,14 +58,24 @@ const Dashboard = () => {
         <SoftBox py={3}>
           <SoftBox mb={3}>
             <Grid container justifyContent="space-between">
-              <Grid item xs={12} sm={10} xl={10.5}>
+              <Grid item xs={12} sm={2} xl={2} marginTop={1}>
+                <SoftBox component={NavLink} to="/" className="flex">
+                  <Typography variant="h6" color="secondary">
+                    <Image src="/noun_1.png" alt="Soft UI Logo" width={75} height={75} />
+                  </Typography>
+                  {account && (
+                    <Typography variant="h6" color="secondary">
+                      <p>Welcome!</p>
+                      <p>Wallet: {shortenHex(account, 4)}</p>
+                    </Typography>
+                  )}
+                </SoftBox>
+              </Grid>
+              <Grid item xs={12} sm={10} xl={10}>
                 <MiniStatisticsCard
                   title={{ text: "Today's money" }}
                   count={balance.props.children[1]}
                 />
-              </Grid>
-              <Grid item xs={12} sm={2} xl={1} marginTop={1}>
-                <Image src="/noun_1.png" alt="Soft UI Logo" width={75} height={75} />
               </Grid>
             </Grid>
           </SoftBox>
