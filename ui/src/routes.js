@@ -31,7 +31,7 @@ import Document from "@/examples/Icons/Document";
 const routes = [
   {
     type: "collapse",
-    name: "Main Account",
+    name: "Dashboard",
     key: "dashboard",
     route: "/dashboard",
     icon: <Shop size="12px" />,
