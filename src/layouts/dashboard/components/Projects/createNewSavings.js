@@ -1,44 +1,43 @@
-import { Button, FilledInput, FormControl, InputLabel } from "@mui/material";
+import { getRandomId } from "@/util";
+import { Button, FilledInput, InputLabel } from "@mui/material";
 import PropTypes from "prop-types";
+import { useForm } from "react-hook-form";
+import { mockData } from "./data/mockedData";
 
-const CreateNewSavings = ({ handleClickAddRow }) => {
-  function handleSubmit(e) {
-    e.preventDefault();
-    console.log("e", e);
-    const purpose = e.target.value;
-    const budget = e.target.value;
-    const startAmount = e.target.value;
-    console.log("purpose", purpose);
-    console.log("budget", budget);
-    console.log("startAmount", startAmount);
-    // handleClickAddRow(purpose, budget, startAmount);
+const CreateNewSavings = ({ handleClose }) => {
+  const { register, handleSubmit } = useForm();
+
+  function onSubmit(data) {
+    console.log(data);
+    const { purpose, budget, startAmount } = data;
+    const id = getRandomId(20);
+    mockData.push({
+      id,
+      purpose: purpose,
+      budget,
+      completion: startAmount,
+    });
+    handleClose();
+    console.log(mockData);
   }
 
   return (
-    <>
-      <FormControl fullWidth>
-        <InputLabel htmlFor="purpose">Purpose:</InputLabel>
-        <FilledInput id="purpose" />
-      </FormControl>
-      <FormControl fullWidth>
-        <InputLabel htmlFor="budget">Budget:</InputLabel>
-        <FilledInput id="budget" />
-      </FormControl>
-      <FormControl fullWidth>
-        <InputLabel htmlFor="startAmount">Start amount:</InputLabel>
-        <FilledInput id="startAmount" />
-      </FormControl>
-      <FormControl fullWidth>
-        <Button type="submit" onClick={(e) => handleSubmit(e)}>
-          Submit
-        </Button>
-      </FormControl>
-    </>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <InputLabel type="text" htmlFor="purpose">
+        Purpose:
+      </InputLabel>
+      <FilledInput id="purpose" {...register("purpose")} />
+      <InputLabel htmlFor="budget">Budget:</InputLabel>
+      <FilledInput type="number" id="budget" {...register("budget")} />
+      <InputLabel htmlFor="startAmount">Start amount:</InputLabel>
+      <FilledInput type="number" id="startAmount" {...register("startAmount")} />
+      <Button type="submit">Submit</Button>
+    </form>
   );
 };
 
 CreateNewSavings.propTypes = {
-  handleClickAddRow: PropTypes.func.isRequired,
+  handleClose: PropTypes.func.isRequired,
 };
 
 export default CreateNewSavings;

@@ -13,9 +13,12 @@ import SoftBadge from "@/components/SoftBadge";
 import { useTimeline } from "@/examples/Timeline/context";
 
 // Custom styles for the TimelineItem
-import { timelineItem, timelineItemIcon } from "@/examples/Timeline/TimelineItem/styles";
+import { timelineItem } from "@/examples/Timeline/TimelineItem/styles";
 
-function TimelineItem({ color, icon, title, dateTime, description, badges, lastItem }) {
+import dollarIcon from "@/assets/images/dollar-sign.svg";
+import Image from "next/image";
+
+function TimelineItem({ color, title, dateTime, description, badges, lastItem }) {
   const isDark = useTimeline();
 
   const renderBadges =
@@ -39,11 +42,11 @@ function TimelineItem({ color, icon, title, dateTime, description, badges, lastI
         height="1.625rem"
         borderRadius="50%"
         position="absolute"
-        top="3.25%"
+        top="5.25%"
         left="2px"
         zIndex={2}
       >
-        <Icon sx={(theme) => timelineItemIcon(theme, { color })}>{icon}</Icon>
+        <Image src={dollarIcon} alt="dollar icon" width={20} height={20} />
       </SoftBox>
       <SoftBox ml={5.75} pt={description ? 0.7 : 0.5} lineHeight={0} maxWidth="30rem">
         <SoftTypography variant="button" fontWeight="medium" color={isDark ? "white" : "dark"}>
@@ -55,7 +58,7 @@ function TimelineItem({ color, icon, title, dateTime, description, badges, lastI
             fontWeight="medium"
             color={isDark ? "secondary" : "text"}
           >
-            {dateTime}
+            Due on {dateTime}
           </SoftTypography>
         </SoftBox>
         <SoftBox mt={2} mb={1.5}>
@@ -95,7 +98,7 @@ TimelineItem.propTypes = {
     "dark",
     "light",
   ]),
-  icon: PropTypes.node.isRequired,
+  icon: PropTypes.node,
   title: PropTypes.string.isRequired,
   dateTime: PropTypes.string.isRequired,
   description: PropTypes.string,

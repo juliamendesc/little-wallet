@@ -26,7 +26,6 @@ const Dashboard = () => {
     setIsLoggedIn,
     setIsConnecting,
     error,
-    account,
     active,
     setIsAuthenticated,
     stopOnboarding,

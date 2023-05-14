@@ -13,10 +13,8 @@ import data from "@/layouts/dashboard/components/Projects/data";
 import SoftButton from "@/components/SoftButton";
 import { Box, Modal } from "@mui/material";
 import CreateNewSavings from "./createNewSavings";
-import { useState } from "react";
-import SoftProgress from "@/components/SoftProgress";
-import Image from "next/image";
-import plusIcon from "@/assets/images/plus-circle.svg";
+import { useEffect, useRef, useState } from "react";
+import { mockData } from "./data/mockedData";
 
 const style = {
   position: "absolute",
@@ -34,8 +32,17 @@ function Projects() {
   const { columns, rows, handleClickAddRow } = data();
   const [open, setOpen] = useState();
 
+  const ref = useRef(mockData);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  useEffect(() => {
+    if (rows.length > ref.current.length) {
+      const newRow = rows[rows.length - 1];
+      mockData.push(newRow);
+    }
+  }, [rows]);
 
   return (
     <Card>
@@ -64,7 +71,7 @@ function Projects() {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <CreateNewSavings handleClickAddRow />
+            <CreateNewSavings handleClose={handleClose} />
           </Box>
         </Modal>
       )}
