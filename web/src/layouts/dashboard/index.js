@@ -20,6 +20,7 @@ import { LoginContext } from "@/context/loginContext";
 import ETHBalance from "components/ETHBalance";
 import { Typography } from "@mui/material";
 import { shortenHex } from "@/util";
+import Image from "next/image";
 
 const Dashboard = () => {
   const { isLoggedIn, safeUser } = useContext(LoginContext);
@@ -36,7 +37,7 @@ const Dashboard = () => {
               <Grid item xs={12} sm={2} xl={4}>
                 <Typography variant="h6" color="secondary">
                   {safeUser && safeUser.address ? (
-                    <img
+                    <Image
                       src={`https://noun-api.com/beta/pfp?name=${safeUser.address}`}
                       alt="Soft UI Logo"
                       width={75}

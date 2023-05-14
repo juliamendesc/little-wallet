@@ -16,7 +16,7 @@ function PageLayout({ background, children }) {
 
   useEffect(() => {
     setLayout(dispatch, "page");
-  }, [pathname]);
+  }, [pathname, dispatch]);
 
   return (
     <SoftBox

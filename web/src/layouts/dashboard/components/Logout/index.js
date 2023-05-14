@@ -7,13 +7,11 @@ function Logout() {
   const router = useRouter();
 
   useEffect(() => {
-      logout()
-      router.push('/connect');
-  }, []);
+    logout();
+    router.push("/connect");
+  }, [logout, router]);
 
-  return (
-    <></>
-  );
+  return <></>;
 }
 
 export default Logout;

@@ -1,7 +1,5 @@
 // @mui material components
 import Card from "@mui/material/Card";
-// import Divider from "@mui/material/Divider";
-import Icon from "@mui/material/Icon";
 
 // Soft UI Dashboard React components
 import SoftBox from "@/components/SoftBox";
@@ -9,6 +7,7 @@ import SoftTypography from "@/components/SoftTypography";
 
 // Billing page components
 import { transactionsMockData } from "./mock";
+import Transaction from "../Transaction";
 
 function Transactions() {
   return (
