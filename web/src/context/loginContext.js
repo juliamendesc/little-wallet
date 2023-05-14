@@ -34,7 +34,9 @@ const LoginProvider = ({ children }) => {
     setIsLoggedIn(true);
   }
 
-  const logout = () => {
+  const logout = async () => {
+    await safeAuth.signOut();
+
     setSafeProvider(null);
     setSafeUser(null);
     setIsLoggedIn(false);

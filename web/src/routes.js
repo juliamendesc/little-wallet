@@ -40,9 +40,9 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Logout",
-    key: "logout",
-    route: "/logout",
+    name: "Connect",
+    key: "connect",
+    route: "/connect",
     icon: <Document size="12px" />,
     component: <Connect triedToEagerConnect={triedToEagerConnect} />,
     noCollapse: true,

@@ -38,9 +38,6 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
 
   const { account, chainId, isLoggedIn } = useContext(LoginContext);
 
-  console.log("account", account);
-  console.log("chainId", chainId);
-
   const closeSidenav = () => setMiniSidenav(dispatch, true);
 
   useEffect(() => {

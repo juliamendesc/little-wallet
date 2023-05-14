@@ -22,19 +22,21 @@ import Connect from "@/layouts/connect";
 import {
   ADAPTER_EVENTS,
   CHAIN_NAMESPACES,
+  CONNECTED_EVENT_DATA,
   SafeEventEmitterProvider,
   WALLET_ADAPTERS
 } from '@web3auth/base'
-import { Web3AuthOptions } from '@web3auth/modal';
+import { Web3Auth, Web3AuthOptions } from '@web3auth/modal';
 import { OpenloginAdapter } from '@web3auth/openlogin-adapter';
 import { SafeAuthKit, Web3AuthEventListener, Web3AuthModalPack } from '@safe-global/auth-kit';
 
 // Soft UI Dashboard React icons
 import Shop from "@/examples/Icons/Shop";
-import Document from "@/examples/Icons/Document";
+import Settings from "@/examples/Icons/Settings";
 import { useSoftUIController } from "@/context";
 import { LoginContext } from "@/context/loginContext";
 import { useRouter } from "next/router";
+import Logout from "@/layouts/dashboard/components/Logout";
 
 const DAI_TOKEN_ADDRESS = "0x6b175474e89094c44da98b954eedeac495271d0f";
 const WEB3_AUTH_CLIENT_ID = process.env.WEB3_AUTH_CLIENT_ID || 'BIjv_Kp1-IyxmtkB1G9BOXWBEYtO7CJZCUtew9vPiNVV-TdXT6Mkx-p1WaIQBMOeE5P5UmGi8xJrKJFX2ut2gtQ'
@@ -45,7 +47,7 @@ export default function App() {
   const [controller, dispatch] = useSoftUIController();
   const { direction, layout, sidenavColor } = controller;
   const { pathname } = useLocation();
-  const { isLoggedIn, setSafeAuth } = useContext(LoginContext);
+  const { isLoggedIn, setSafeAuth, safeAuth } = useContext(LoginContext);
   const router = useRouter();
 
   const routes = [
@@ -57,15 +59,24 @@ export default function App() {
       icon: <Shop size="12px" />,
       component: <Dashboard />,
       noCollapse: true,
+    },
+    {
+      type: "collapse",
+      name: "Logout",
+      key: "logout",
+      route: "/logout",
+      icon: <Settings size="12px" />,
+      component: <Logout />,
+      noCollapse: true,
     }
   ];
 
-  /*useEffect(() => {
+  useEffect(() => {
     console.log('===> isLoggedIn : ', isLoggedIn)
     if (!isLoggedIn) {
       router.push("/connect");
     }
-  }, [isLoggedIn]);*/
+  }, [isLoggedIn]);
 
   useEffect(() => {
     const options: Web3AuthOptions = {
@@ -113,9 +124,7 @@ export default function App() {
         safeAuthKit.subscribe(ADAPTER_EVENTS.CONNECTED, connectedHandler)
         safeAuthKit.subscribe(ADAPTER_EVENTS.DISCONNECTED, disconnectedHandler)
 
-        console.log('safeAuthKit', safeAuthKit.getUserInfo())
         setSafeAuth(safeAuthKit)
-      
       } catch (error) {
         console.error(error);
       }
@@ -135,7 +144,7 @@ export default function App() {
       }
 
       return null;
-    });
+  });
 
   return (
     <ThemeProvider theme={theme}>
@@ -149,10 +158,7 @@ export default function App() {
           </Routes>
         </>
       ) : (
-        <Routes>
-          {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/connect" />} />
-        </Routes>
+        <Connect />
       )}
     </ThemeProvider>
   );

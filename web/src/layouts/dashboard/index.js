@@ -24,8 +24,10 @@ import { NavLink } from "react-router-dom";
 import { shortenHex } from "@/util";
 
 const Dashboard = () => {
+  const account = null;
   const {
     isLoggedIn,
+    safeUser
     // setIsLoggedIn,
     // setIsConnecting,
     // error,
@@ -35,6 +37,7 @@ const Dashboard = () => {
     // stopOnboarding,
   } = useContext(LoginContext);
 
+  console.log(safeUser)
   const balance = ETHBalance();
 
   // useEffect(() => {
@@ -58,18 +61,18 @@ const Dashboard = () => {
         <SoftBox py={3}>
           <SoftBox mb={3}>
             <Grid container justifyContent="space-around">
-              <Grid item xs={12} sm={2} xl={2} marginTop={1}>
-                <SoftBox component={NavLink} to="/" className="flex">
-                  <Typography variant="h6" color="secondary">
-                    <Image src="/noun_1.png" alt="Soft UI Logo" width={75} height={75} />
+              <Grid item xs={12} sm={2} xl={4}>
+                <Typography variant="h6" color="secondary">
+                    {safeUser && safeUser.address ? (
+                      <img src={`https://noun-api.com/beta/pfp?name=${safeUser.address}`} alt="Soft UI Logo" width={75} height={75} />
+                    ) : null}
                   </Typography>
-                  {account && (
+                  {safeUser && (
                     <Typography variant="h6" color="secondary">
                       <p>Welcome!</p>
-                      <p>Wallet: {shortenHex(account, 4)}</p>
+                      <p>Wallet: {shortenHex(safeUser.address, 4)}</p>
                     </Typography>
                   )}
-                </SoftBox>
               </Grid>
               <Grid item xs={12} sm={10} xl={8}>
                 <MiniStatisticsCard
