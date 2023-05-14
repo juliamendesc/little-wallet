@@ -57,7 +57,7 @@ const Dashboard = () => {
       <DashboardLayout>
         <SoftBox py={3}>
           <SoftBox mb={3}>
-            <Grid container justifyContent="space-between">
+            <Grid container justifyContent="space-around">
               <Grid item xs={12} sm={2} xl={2} marginTop={1}>
                 <SoftBox component={NavLink} to="/" className="flex">
                   <Typography variant="h6" color="secondary">
@@ -71,7 +71,7 @@ const Dashboard = () => {
                   )}
                 </SoftBox>
               </Grid>
-              <Grid item xs={12} sm={10} xl={10}>
+              <Grid item xs={12} sm={10} xl={8}>
                 <MiniStatisticsCard
                   title={{ text: "Today's money" }}
                   count={balance.props.children[1]}
