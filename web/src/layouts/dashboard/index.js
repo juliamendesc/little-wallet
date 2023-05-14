@@ -15,45 +15,17 @@ import OrderOverview from "@/layouts/dashboard/components/OrderOverview";
 
 // Data
 import Transactions from "./components/Transactions";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { LoginContext } from "@/context/loginContext";
 import ETHBalance from "components/ETHBalance";
-import Image from "next/image";
 import { Typography } from "@mui/material";
-import { NavLink } from "react-router-dom";
 import { shortenHex } from "@/util";
 
 const Dashboard = () => {
-  const account = null;
-  const {
-    isLoggedIn,
-    safeUser
-    // setIsLoggedIn,
-    // setIsConnecting,
-    // error,
-    // account,
-    // active,
-    // setIsAuthenticated,
-    // stopOnboarding,
-  } = useContext(LoginContext);
+  const { isLoggedIn, safeUser } = useContext(LoginContext);
 
-  console.log(safeUser)
+  console.log(safeUser);
   const balance = ETHBalance();
-
-  // useEffect(() => {
-  //   if (active || error) {
-  //     if (active) {
-  //       setIsLoggedIn(true);
-  //     }
-  //     setIsConnecting(false);
-  //     stopOnboarding();
-  //   }
-
-  //   return () => {
-  //     setIsLoggedIn(false);
-  //     setIsAuthenticated(false);
-  //   };
-  // }, [active, error, stopOnboarding]);
 
   return (
     isLoggedIn && (
@@ -63,16 +35,21 @@ const Dashboard = () => {
             <Grid container justifyContent="space-around">
               <Grid item xs={12} sm={2} xl={4}>
                 <Typography variant="h6" color="secondary">
-                    {safeUser && safeUser.address ? (
-                      <img src={`https://noun-api.com/beta/pfp?name=${safeUser.address}`} alt="Soft UI Logo" width={75} height={75} />
-                    ) : null}
+                  {safeUser && safeUser.address ? (
+                    <img
+                      src={`https://noun-api.com/beta/pfp?name=${safeUser.address}`}
+                      alt="Soft UI Logo"
+                      width={75}
+                      height={75}
+                    />
+                  ) : null}
+                </Typography>
+                {safeUser && (
+                  <Typography variant="h6" color="secondary">
+                    <p>Welcome!</p>
+                    <p>Wallet: {shortenHex(safeUser.address, 4)}</p>
                   </Typography>
-                  {safeUser && (
-                    <Typography variant="h6" color="secondary">
-                      <p>Welcome!</p>
-                      <p>Wallet: {shortenHex(safeUser.address, 4)}</p>
-                    </Typography>
-                  )}
+                )}
               </Grid>
               <Grid item xs={12} sm={10} xl={8}>
                 <MiniStatisticsCard
