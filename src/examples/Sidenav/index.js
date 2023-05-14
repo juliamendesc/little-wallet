@@ -36,7 +36,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const { pathname } = location;
   const collapseName = pathname.split("/").slice(1)[0];
 
-  const { account, chainId } = useContext(LoginContext);
+  const { account, chainId, isLoggedIn } = useContext(LoginContext);
 
   console.log("account", account);
   console.log("chainId", chainId);
@@ -121,6 +121,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   });
 
   return (
+    isLoggedIn && (
     <SidenavRoot {...rest} variant="permanent" ownerState={{ transparentSidenav, miniSidenav }}>
       <SoftBox textAlign="center" className="flex ">
         <SoftBox
@@ -151,6 +152,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
       <Divider />
       <List>{renderRoutes}</List>
     </SidenavRoot>
+    )
   );
 }
 

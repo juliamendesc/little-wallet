@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 // @mui material components
 import Grid from "@mui/material/Grid";
+import Image from "next/image";
 
 // Soft UI Dashboard React components
 import SoftBox from "@/components/SoftBox";
@@ -10,6 +11,7 @@ import SoftTypography from "@/components/SoftTypography";
 
 // Soft UI Dashboard React examples
 import PageLayout from "@/examples/LayoutContainers/PageLayout";
+import brand from "public/logo.svg";
 
 function BasicLayout({ title, description, image, children }) {
   return (
@@ -36,7 +38,10 @@ function BasicLayout({ title, description, image, children }) {
       >
         <Grid container spacing={3} justifyContent="center" sx={{ textAlign: "center" }}>
           <Grid item xs={10} lg={4}>
-            <SoftBox mt={6} mb={1}>
+            <SoftBox mt={3}>
+              {brand && <Image src={brand.src} alt="Soft UI Logo" width={250} height={250} />}
+            </SoftBox>
+            <SoftBox mb={1}>
               <SoftTypography variant="h1" color="inherit" fontWeight="bold">
                 {title}
               </SoftTypography>

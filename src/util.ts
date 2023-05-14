@@ -1,4 +1,4 @@
-import type { BigNumberish } from "@ethersproject/bignumber";
+import { BigNumberish } from "@ethersproject/bignumber";
 import { formatUnits } from "@ethersproject/units";
 
 export function shortenHex(hex: string, length = 4) {

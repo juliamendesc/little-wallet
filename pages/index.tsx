@@ -19,6 +19,16 @@ import brand from "public/logo.svg";
 import Dashboard from "@/layouts/dashboard";
 import Connect from "@/layouts/connect";
 
+import {
+  ADAPTER_EVENTS,
+  CHAIN_NAMESPACES,
+  SafeEventEmitterProvider,
+  WALLET_ADAPTERS
+} from '@web3auth/base'
+import { Web3AuthOptions } from '@web3auth/modal';
+import { OpenloginAdapter } from '@web3auth/openlogin-adapter';
+import { SafeAuthKit, Web3AuthEventListener, Web3AuthModalPack } from '@safe-global/auth-kit';
+
 // Soft UI Dashboard React icons
 import Shop from "@/examples/Icons/Shop";
 import Document from "@/examples/Icons/Document";
@@ -27,62 +37,92 @@ import { LoginContext } from "@/context/loginContext";
 import { useRouter } from "next/router";
 
 const DAI_TOKEN_ADDRESS = "0x6b175474e89094c44da98b954eedeac495271d0f";
+const WEB3_AUTH_CLIENT_ID = process.env.WEB3_AUTH_CLIENT_ID || 'BIjv_Kp1-IyxmtkB1G9BOXWBEYtO7CJZCUtew9vPiNVV-TdXT6Mkx-p1WaIQBMOeE5P5UmGi8xJrKJFX2ut2gtQ'
+const connectedHandler: Web3AuthEventListener = (data) => console.log('CONNECTED', data)
+const disconnectedHandler: Web3AuthEventListener = (data) => console.log('DISCONNECTED', data)
 
 export default function App() {
   const [controller, dispatch] = useSoftUIController();
   const { direction, layout, sidenavColor } = controller;
   const { pathname } = useLocation();
-  const {
-    isAuthenticated,
-    isLoggedIn,
-    setIsLoggedIn,
-    isConnecting,
-    setIsConnecting,
-    setConnecting,
-    triedToEagerConnect,
-    web3,
-    error,
-    activate,
-    chainId,
-    account,
-    setError,
-    ENSName,
-    active,
-    setIsAuthenticated,
-    connecting,
-    isMetaMaskInstalled,
-    isWeb3Available,
-    startOnboarding,
-    stopOnboarding,
-  } = useContext(LoginContext);
+  const { isLoggedIn, setSafeAuth } = useContext(LoginContext);
   const router = useRouter();
 
   const routes = [
     {
       type: "collapse",
-      name: "Connect",
-      key: "connect",
-      route: "/connect",
-      icon: <Document size="12px" />,
-      component: <Connect />,
-      noCollapse: true,
-    },
-    {
-      type: "collapse",
-      name: "Dashboard",
+      name: "Main Account",
       key: "dashboard",
       route: "/dashboard",
       icon: <Shop size="12px" />,
       component: <Dashboard />,
       noCollapse: true,
-    },
+    }
   ];
 
-  useEffect(() => {
+  /*useEffect(() => {
+    console.log('===> isLoggedIn : ', isLoggedIn)
     if (!isLoggedIn) {
       router.push("/connect");
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn]);*/
+
+  useEffect(() => {
+    const options: Web3AuthOptions = {
+      clientId: WEB3_AUTH_CLIENT_ID,
+      web3AuthNetwork: 'testnet',
+      chainConfig: {
+        chainNamespace: CHAIN_NAMESPACES.EIP155,
+        chainId: '0x27d8',
+        rpcTarget: `https://rpc.chiado.gnosis.gateway.fm`
+      },
+      uiConfig: {
+        theme: 'dark',
+        loginMethodsOrder: ['google', 'facebook']
+      }
+    }
+
+    const modalConfig = {
+      [WALLET_ADAPTERS.METAMASK]: {
+        label: 'metamask',
+        showOnDesktop: true,
+        showOnMobile: false
+      }
+    }
+
+    const openloginAdapter = new OpenloginAdapter({
+      loginSettings: {
+        mfaLevel: 'default'
+      },
+      adapterSettings: {
+        uxMode: 'popup',
+        whiteLabel: {
+          name: 'Safe'
+        }
+      }
+    })
+
+    const init = async () => {
+      try {
+        const web3AuthModalPack = new Web3AuthModalPack(options, [openloginAdapter], modalConfig)
+
+        const safeAuthKit = await SafeAuthKit.init(web3AuthModalPack, {
+          txServiceUrl: 'https://safe-transaction-goerli.safe.global'
+        })
+
+        safeAuthKit.subscribe(ADAPTER_EVENTS.CONNECTED, connectedHandler)
+        safeAuthKit.subscribe(ADAPTER_EVENTS.DISCONNECTED, disconnectedHandler)
+
+        console.log('safeAuthKit', safeAuthKit.getUserInfo())
+        setSafeAuth(safeAuthKit)
+      
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    init();
+}, [])
 
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {
@@ -100,19 +140,20 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      {layout === "dashboard" && (
+      {isLoggedIn ? (
         <>
           <Sidenav color={sidenavColor} brand={brand} brandName="Tiny Vault" routes={routes} />
+          <Routes>
+            {getRoutes(routes)}
+            <Route path="*" element={<Navigate to="/dashboard" />} />
+          </Routes>
         </>
-      )}
-      <Routes>
-        {getRoutes(routes)}
-        {isLoggedIn ? (
-          <Route path="*" element={<Navigate to="/dashboard" />} />
-        ) : (
+      ) : (
+        <Routes>
+          {getRoutes(routes)}
           <Route path="*" element={<Navigate to="/connect" />} />
-        )}
-      </Routes>
+        </Routes>
+      )}
     </ThemeProvider>
   );
 }

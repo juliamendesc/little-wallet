@@ -23,31 +23,31 @@ import Image from "next/image";
 const Dashboard = () => {
   const {
     isLoggedIn,
-    setIsLoggedIn,
-    setIsConnecting,
-    error,
-    account,
-    active,
-    setIsAuthenticated,
-    stopOnboarding,
+    // setIsLoggedIn,
+    // setIsConnecting,
+    // error,
+    // account,
+    // active,
+    // setIsAuthenticated,
+    // stopOnboarding,
   } = useContext(LoginContext);
 
   const balance = ETHBalance();
 
-  useEffect(() => {
-    if (active || error) {
-      if (active) {
-        setIsLoggedIn(true);
-      }
-      setIsConnecting(false);
-      stopOnboarding();
-    }
+  // useEffect(() => {
+  //   if (active || error) {
+  //     if (active) {
+  //       setIsLoggedIn(true);
+  //     }
+  //     setIsConnecting(false);
+  //     stopOnboarding();
+  //   }
 
-    return () => {
-      setIsLoggedIn(false);
-      setIsAuthenticated(false);
-    };
-  }, [active, error, stopOnboarding]);
+  //   return () => {
+  //     setIsLoggedIn(false);
+  //     setIsAuthenticated(false);
+  //   };
+  // }, [active, error, stopOnboarding]);
 
   return (
     isLoggedIn && (

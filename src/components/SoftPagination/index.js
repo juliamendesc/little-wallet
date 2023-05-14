@@ -14,7 +14,7 @@ const Context = createContext(null);
 
 const SoftPagination = forwardRef(
   ({ item, variant, color, size, active, children, ...rest }, ref) => {
-    const context = item ? useContext(Context) : null;
+    const context = null; //item ? useContext(Context) : null;
     const paginationSize = context ? context.size : null;
     const value = useMemo(() => ({ variant, color, size }), [variant, color, size]);
 
