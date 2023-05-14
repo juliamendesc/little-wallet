@@ -22,11 +22,40 @@ import { Typography } from "@mui/material";
 import { shortenHex } from "@/util";
 import Image from "next/image";
 
-const Dashboard = () => {
-  const { isLoggedIn, safeUser } = useContext(LoginContext);
+import { ethers } from 'ethers'
+import RPC from "../../web3RPC";
 
-  console.log(safeUser);
-  const balance = ETHBalance();
+const Dashboard = () => {
+
+  const account = null;
+  const {
+    isLoggedIn,
+    safeUser,
+    safeAuth,
+    safeProvider
+    // setIsLoggedIn,
+    // setIsConnecting,
+    // error,
+    // account,
+    // active,
+    // setIsAuthenticated,
+    // stopOnboarding,
+  } = useContext(LoginContext);
+
+  console.log(safeUser)
+  //const balance = ETHBalance();
+
+  const getBalance = async () => {
+    const provider = new ethers.providers.Web3Provider(safeAuth?.getProvider());
+    console.log('getBalance >> provider', provider)
+    
+    const rpc = new RPC(provider);
+    console.log('getBalance >> rpc', rpc)
+
+    const balance = await rpc.getBalance();
+
+    console.log('getBalance >> balance', balance)
+  };
 
   return (
     isLoggedIn && (
@@ -53,9 +82,10 @@ const Dashboard = () => {
                 )}
               </Grid>
               <Grid item xs={12} sm={10} xl={8}>
+                {console.log('GETBALANCE: ', getBalance())}
                 <MiniStatisticsCard
                   title={{ text: "Today's money" }}
-                  count={balance.props.children[1]}
+                  count={0} //balance.props.children[1]}
                 />
               </Grid>
             </Grid>
