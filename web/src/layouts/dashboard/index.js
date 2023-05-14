@@ -23,11 +23,16 @@ import { Typography } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { shortenHex } from "@/util";
 
+import { ethers } from 'ethers'
+import RPC from "../../web3RPC";
+
 const Dashboard = () => {
   const account = null;
   const {
     isLoggedIn,
-    safeUser
+    safeUser,
+    safeAuth,
+    safeProvider
     // setIsLoggedIn,
     // setIsConnecting,
     // error,
@@ -38,7 +43,19 @@ const Dashboard = () => {
   } = useContext(LoginContext);
 
   console.log(safeUser)
-  const balance = ETHBalance();
+  //const balance = ETHBalance();
+
+  const getBalance = async () => {
+    const provider = new ethers.providers.Web3Provider(safeAuth?.getProvider());
+    console.log('getBalance >> provider', provider)
+    
+    const rpc = new RPC(provider);
+    console.log('getBalance >> rpc', rpc)
+
+    const balance = await rpc.getBalance();
+
+    console.log('getBalance >> balance', balance)
+  };
 
   // useEffect(() => {
   //   if (active || error) {
@@ -75,9 +92,10 @@ const Dashboard = () => {
                   )}
               </Grid>
               <Grid item xs={12} sm={10} xl={8}>
+                {console.log('GETBALANCE: ', getBalance())}
                 <MiniStatisticsCard
                   title={{ text: "Today's money" }}
-                  count={balance.props.children[1]}
+                  count={0} //balance.props.children[1]}
                 />
               </Grid>
             </Grid>
