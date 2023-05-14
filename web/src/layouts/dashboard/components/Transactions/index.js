@@ -8,7 +8,6 @@ import SoftBox from "@/components/SoftBox";
 import SoftTypography from "@/components/SoftTypography";
 
 // Billing page components
-import Transaction from "../Transaction";
 import { transactionsMockData } from "./mock";
 
 function Transactions() {
